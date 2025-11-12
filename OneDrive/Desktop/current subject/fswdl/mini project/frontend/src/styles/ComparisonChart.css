@@ -1,0 +1,18 @@
+/* Comparison Chart Styles */
+.comparison-chart {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  margin: 30px 0;
+}
+
+.comparison-chart h3 {
+  color: #1e40af;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+.recharts-surface {
+  margin: 0 auto;
+}

@@ -1,0 +1,22 @@
+/* Stock Chart Styles */
+.stock-chart {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 30px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.stock-chart h3 {
+  color: #1e40af;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+.recharts-surface {
+  margin: 0 auto;
+}
+
+.recharts-text {
+  font-family: inherit;
+}

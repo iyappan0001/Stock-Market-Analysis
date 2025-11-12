@@ -1,0 +1,170 @@
+/* IPO Comparison Styles */
+.ipo-comparison-page {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  padding-bottom: 40px;
+}
+
+.comparison-header {
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+  color: white;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.comparison-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.comparison-header .symbol {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+.comparison-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+.ipo-selector {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.ipo-selector label {
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+}
+
+.ipo-dropdown {
+  flex: 1;
+  padding: 10px 15px;
+  border: 2px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: white;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.ipo-dropdown:hover {
+  border-color: #dc2626;
+}
+
+.ipo-dropdown:focus {
+  outline: none;
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+@media (max-width: 768px) {
+  .ipo-selector {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ipo-dropdown {
+    width: 100%;
+  }
+}
+
+.ipo-info {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.ipo-info h2 {
+  color: #dc2626;
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  background: #f8fafc;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid #dc2626;
+}
+
+.info-item .label {
+  color: #666;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.info-item .value {
+  color: #dc2626;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.info-item .value.positive {
+  color: #22c55e;
+}
+
+.info-item .value.negative {
+  color: #dc2626;
+}
+
+.comparison-chart {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.established-stock-info {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.established-stock-info h2 {
+  color: #1e40af;
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+}
+
+.established-stock-info .info-item {
+  border-left-color: #1e40af;
+}
+
+.established-stock-info .info-item .value {
+  color: #1e40af;
+}
