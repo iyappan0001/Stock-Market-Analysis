@@ -18,16 +18,14 @@ function Dashboard({ user }) {
   const fetchStocks = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem("token");
-      const response = await axios.get("/api/stocks", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get("/api/stocks");
       setStocks(response.data.stocks);
       if (response.data.stocks.length > 0) {
         setSelectedStock(response.data.stocks[0]);
       }
     } catch (err) {
       setError("Failed to fetch stocks");
+      console.error("Fetch error:", err);
     } finally {
       setLoading(false);
     }
@@ -43,10 +41,7 @@ function Dashboard({ user }) {
     }
 
     try {
-      const token = localStorage.getItem("token");
-      const response = await axios.get(`/api/stocks/search/${term}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(`/api/stocks/search/${term}`);
       setStocks(response.data.stocks);
     } catch (err) {
       console.log("Search failed");

@@ -1,5 +1,6 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 const User = require("../models/User");
 const { protect } = require("../middleware/auth");
 
@@ -15,6 +16,13 @@ router.post("/signup", async (req, res) => {
       return res
         .status(400)
         .json({ message: "Please provide all required fields" });
+    }
+
+    // Ensure MongoDB is connected before querying
+    if (mongoose.connection.readyState !== 1) {
+      return res
+        .status(503)
+        .json({ message: "Database not connected. Please try again later." });
     }
 
     // Check if user already exists
@@ -47,7 +55,12 @@ router.post("/signup", async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    if (error.code === 11000) {
+      return res.status(400).json({ message: "Email already registered" });
+    }
+
+    console.error("Signup error:", error);
+    res.status(500).json({ message: "Server error. Please try again." });
   }
 });
 

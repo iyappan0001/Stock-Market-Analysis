@@ -6,6 +6,10 @@ const authRoutes = require("./routes/auth");
 const stockRoutes = require("./routes/stocks");
 const ipoRoutes = require("./routes/ipo");
 const { startAllJobs, stopAllJobs } = require("./jobs/scheduledJobs");
+const Stock = require("./models/Stock");
+const IPO = require("./models/IPO");
+const stocksData = require("./data/stocksData");
+const ipoData = require("./data/ipoData");
 
 const app = express();
 
@@ -14,26 +18,63 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Database Connection
-mongoose
-  .connect(
-    process.env.MONGODB_URI || "mongodb://localhost:27017/stock_market",
-    {
+// Database Connection (robust, with startup gating)
+const connectDB = async () => {
+  const mongoUri =
+    process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/stock_market";
+
+  try {
+    await mongoose.connect(mongoUri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-    }
-  )
-  .then(() => {
+      serverSelectionTimeoutMS: 10000,
+      socketTimeoutMS: 45000,
+    });
+
     console.log("MongoDB connected");
-    // Start scheduled jobs after database connection
+    
+    // Auto-initialize data if empty
+    const initializeData = async () => {
+      try {
+        const stockCount = await Stock.countDocuments();
+        if (stockCount === 0) {
+          await Stock.insertMany(stocksData);
+          console.log(`✓ Initialized ${stocksData.length} stocks`);
+        }
+        
+        const ipoCount = await IPO.countDocuments();
+        if (ipoCount === 0) {
+          await IPO.insertMany(ipoData);
+          console.log(`✓ Initialized ${ipoData.length} IPOs`);
+        }
+      } catch (err) {
+        console.error("Data initialization error:", err.message);
+      }
+    };
+    
+    await initializeData();
     startAllJobs();
-  })
-  .catch((err) => console.log("Database connection error:", err));
+
+    mongoose.connection.on("error", (err) => {
+      console.error("MongoDB connection error:", err);
+    });
+
+    mongoose.connection.on("disconnected", () => {
+      console.warn("MongoDB disconnected");
+    });
+  } catch (err) {
+    console.error("Database connection error:", err);
+    process.exit(1);
+  }
+};
 
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/stocks", stockRoutes);
 app.use("/api/ipo", ipoRoutes);
+
+// Start server after DB connect
+connectDB();
 
 // Error handling middleware
 app.use((err, req, res, next) => {
